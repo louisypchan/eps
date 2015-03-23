@@ -4,57 +4,104 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var compression = require('compression');
+
+var hbs = require('hbs');
+//include cluster module
+var cluster = require('cluster');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
+// numbers of CPUs
+// use n-1, leave one to handle other things
+var numCPUs = require('os').cpus().length - 1;
 
+
+if (cluster.isMaster) {
+    // Create a worker for each CPU
+    for (var i = 0; i < numCPUs; i++) {
+        var wk = cluster.fork();
+        wk.send('[master] ' + 'hi worker' + wk.id);
+    }
+
+    cluster.on('fork', function (worker) {
+        console.log('[master] ' + 'fork: worker' + worker.id);
+    });
+
+    cluster.on('online', function (worker) {
+        console.log('[master] ' + 'online: worker' + worker.id);
+    });
+
+    cluster.on('listening',function(worker,address){
+        console.log('listening: worker ' + worker.process.pid +', Address: '+address.address+":"+address.port);
+    });
+
+    cluster.on('disconnect', function (worker) {
+        console.log('[master] ' + 'disconnect: worker' + worker.id);
+    });
+
+    cluster.on('exit', function(worker, code, signal) {
+        // Replace the dead worker,
+        // we're not sentimental
+        console.log('Worker ' + worker.id + ' died :(');
+        cluster.fork();
+    });
+
+} else {
+
+    var app = express();
+    hbs.registerPartials(__dirname + '/views/partials');
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+    app.set('views', path.join(__dirname, 'views'));
+    app.set('view engine', 'hbs');
+
+    //specific partials directory
+    //Partials that are loaded from a directory are named based on their filename, where spaces and hyphens are replaced with an underscore character:
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+    app.use(logger('dev'));
+    app.use(compression()); //Turn on the compression /gzip
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(cookieParser());
+    app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+    app.use('/', routes);
+    app.use('/users', users);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
+    app.use(function(req, res, next) {
+        var err = new Error('Not Found');
+        err.status = 404;
+        next(err);
+    });
 
 // error handlers
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
+    if (app.get('env') === 'development') {
+        app.use(function(err, req, res, next) {
+            res.status(err.status || 500);
+            res.render('error', {
+                message: err.message,
+                error: err
+            });
+        });
+    }
+
+// production error handler
+// no stacktraces leaked to user
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
-            error: err
+            error: {}
         });
     });
+
+    app.listen(3000);
+    console.log("EPS Application Listening...");
 }
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
-
-
-module.exports = app;

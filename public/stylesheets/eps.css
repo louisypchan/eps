@@ -1,0 +1,107 @@
+html,
+body {
+  border: 0 none;
+  height: 100%;
+  padding: 0;
+  width: 100%;
+  margin: 0;
+}
+body {
+  min-height: 100%;
+  background-color: #f5f7fa;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: #676a6c;
+  font-weight: normal;
+  line-height: 1.52857143;
+}
+.eps {
+  /* Old syntax */
+
+  display: -webkit-box;
+  /* New syntax */
+
+  display: -webkit-flex;
+  /* CSS 3 */
+
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+}
+.eps.v {
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+.eps.h {
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+.eps.c {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+.eps #wrapper {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+.eps #wrapper header {
+  min-height: 55px;
+  position: fixed;
+  width: 100%;
+  background-color: #23b7e5;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#23b7e5), to(#51c6ea));
+  background-image: linear-gradient(to right bottom, #23b7e5 0%, #51c6ea 100%);
+  border: 0;
+  z-index: 200;
+}
+.eps #wrapper aside {
+  width: 220px;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+  min-height: 100%;
+  position: fixed;
+  z-index: 199;
+  border-right: 1px solid #000;
+  background: #ffffff;
+}
+.eps #wrapper .nav-wrapper {
+  padding: 55px 0 0 0;
+}
+.eps #wrapper .nav-wrapper nav ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.eps #wrapper .nav-wrapper nav ul li {
+  border-left: 3px solid transparent;
+  display: block;
+}
+.eps #wrapper .nav-wrapper nav ul li.header {
+  padding: 12px 15px;
+  font-size: 13px;
+}
+.eps #wrapper section {
+  margin-left: 222px;
+  height: 100%;
+  margin-top: 55px;
+  width: 100%;
+}
+
+/* This beautiful CSS-File has been crafted with LESS (lesscss.org) and compiled by simpLESS (wearekiss.com/simpless) */

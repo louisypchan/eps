@@ -1,0 +1,43 @@
+html, body{
+  border : 0 none;
+  height: 100%;
+  padding: 0;
+  width: 100%;
+  margin: 0;
+}
+
+body{
+  min-height: 100%;
+  background-color: @bodyBgColor;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color : @eps-var-font-color;
+  font-weight: normal;
+  line-height : @lineHeight;
+}
+
+.eps{
+  &.v{
+    #flex.direction(vertical, column);
+  }
+
+  &.h{
+    #flex.direction(horizontal, row);
+  }
+  &.c{
+    #flex.justify(center, center);
+    #flex.align(center, center);
+    #flex.direction(vertical, column);
+  }
+  #flex.box;
+  #flex.justify(start, flex-start);
+  #flex.align(center, flex-start);
+
+  #wrapper {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+}
+
