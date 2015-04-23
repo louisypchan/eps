@@ -1,3 +1,7 @@
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
 html,
 body {
   border: 0 none;
@@ -5,6 +9,21 @@ body {
   padding: 0;
   width: 100%;
   margin: 0;
+}
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*,
+button,
+input,
+i,
+a {
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  text-decoration: none;
 }
 body {
   min-height: 100%;
@@ -60,14 +79,23 @@ body {
   overflow-x: hidden;
 }
 .eps #wrapper header {
-  min-height: 55px;
+  min-height: 60px;
   position: fixed;
   width: 100%;
-  background-color: #23b7e5;
-  background-image: -webkit-gradient(linear, left top, right bottom, from(#23b7e5), to(#51c6ea));
-  background-image: linear-gradient(to right bottom, #23b7e5 0%, #51c6ea 100%);
+  background-color: #4285f4;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  padding-right: 10px;
   border: 0;
   z-index: 200;
+}
+.eps #wrapper header ul.header-inner {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.eps #wrapper header ul.header-inner li.logo a {
+  color: #fff;
+  text-transform: uppercase;
 }
 .eps #wrapper aside {
   width: 220px;
@@ -81,7 +109,7 @@ body {
   background: #ffffff;
 }
 .eps #wrapper .nav-wrapper {
-  padding: 55px 0 0 0;
+  padding: 60px 0 0 0;
 }
 .eps #wrapper .nav-wrapper nav ul {
   list-style: none;
@@ -100,7 +128,7 @@ body {
 .eps #wrapper section {
   margin-left: 222px;
   height: 100%;
-  margin-top: 55px;
+  margin-top: 60px;
   width: 100%;
 }
 
